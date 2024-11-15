@@ -5,6 +5,8 @@ const mongoose = require('mongoose')
 const dotenv = require('dotenv')
 dotenv.config()
 
+const amqp = require('amqplib');
+
 const port = process.env.PORT || 3000
 
 const connectDB = async () =>{
