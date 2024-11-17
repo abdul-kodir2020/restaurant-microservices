@@ -21,8 +21,8 @@ app.get('/', (req, res) => {
 })
 
 
-app.listen(port, () => {
+app.listen(port, async () => {
   console.log(`listening on port ${port}`)
-  connectRabbitMQ().catch((err) => console.error('Failed to connect to RabbitMQ:', err));
+  await connectRabbitMQ().catch((err) => console.error('Failed to connect to RabbitMQ:', err));
 })
 connectDB()

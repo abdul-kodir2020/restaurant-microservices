@@ -35,8 +35,8 @@ app.post('/send', async (req, res) => {
 
 });
 
-app.listen(port, () => {
+app.listen(port, async() => {
   console.log(`listening on port ${port}`)
-  connectRabbitMQ();
+  await connectRabbitMQ();
 })
 connectDB()

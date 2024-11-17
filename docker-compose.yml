@@ -1,47 +1,4 @@
 services:
-  commande_app:
-    build: ./commande
-    container_name: commande_app
-    volumes:
-      - .:/usr/src/app 
-    ports:
-      - "3001:3000"
-    environment:
-      - MONGO_URI=mongodb://mongo_commande:27017/db_commande
-      - RABBITMQ_URL=amqp://admin:admin@rabbitmq
-    depends_on:
-      - mongo_commande
-      - rabbitmq
-
-  menu_app:
-    build: ./menu
-    container_name: menu_app
-    volumes:
-      - .:/usr/src/app 
-    ports:
-      - "3002:3000"
-    environment:
-      - MONGO_URI=mongodb://mongo_menu:27017/db_menu
-      - RABBITMQ_URL=amqp://admin:admin@rabbitmq
-    depends_on:
-      - mongo_menu
-      - rabbitmq
-
-  utilisateur_app:
-    build: ./utilisateur
-    container_name: utilisateur_app
-    volumes:
-      - .:/usr/src/app 
-    ports:
-      - "3003:3000"
-    environment:
-      - MONGO_URI=mongodb://mongo_utilisateur:27017/db_utilisateur
-      - RABBITMQ_URL=amqp://admin:admin@rabbitmq
-      - JWT_SECRET=dfgbdfgnbdfdbn
-    depends_on:
-      - mongo_utilisateur
-      - rabbitmq
-
   mongo_commande:
     image: mongo:6
     container_name: mongo_db_commande
@@ -75,6 +32,49 @@ services:
     environment:
       RABBITMQ_DEFAULT_USER: admin
       RABBITMQ_DEFAULT_PASS: admin
+      
+  commande_app:
+    build: ./commande
+    container_name: commande_app
+    volumes:
+      - .:/usr/src/app 
+    ports:
+      - "3001:3000"
+    environment:
+      - MONGO_URI=mongodb://mongo_commande:27017/db_commande
+      - RABBITMQ_URL=amqp://admin:admin@rabbitmq:5672
+    depends_on:
+      - mongo_commande
+      - rabbitmq
+
+  menu_app:
+    build: ./menu
+    container_name: menu_app
+    volumes:
+      - .:/usr/src/app 
+    ports:
+      - "3002:3000"
+    environment:
+      - MONGO_URI=mongodb://mongo_menu:27017/db_menu
+      - RABBITMQ_URL=amqp://admin:admin@rabbitmq:5672
+    depends_on:
+      - mongo_menu
+      - rabbitmq
+
+  utilisateur_app:
+    build: ./utilisateur
+    container_name: utilisateur_app
+    volumes:
+      - .:/usr/src/app 
+    ports:
+      - "3003:3000"
+    environment:
+      - MONGO_URI=mongodb://mongo_utilisateur:27017/db_utilisateur
+      - RABBITMQ_URL=amqp://admin:admin@rabbitmq:5672
+      - JWT_SECRET=dfgbdfgnbdfdbn
+    depends_on:
+      - mongo_utilisateur
+      - rabbitmq
 
   # firefox:
   #   container_name: firefox

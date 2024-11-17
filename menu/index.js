@@ -20,9 +20,9 @@ app.get('/', (req, res) => {
   res.send('Hello World for menu')
 })
 
-app.listen(port, () => {
+app.listen(port, async () => {
   console.log(`listening on port ${port}`)
-  connectRabbitMQ()
+  await connectRabbitMQ()
     .then(() => consumeMessages())
     .catch((err) => console.error('RabbitMQ setup failed:', err));
 })
