@@ -1,64 +1,62 @@
-version: "3.9"
-
 services:
-  # commande_app:
-  #   build: ./commande
-  #   container_name: commande_app
-  #   volumes:
-  #     - .:/usr/src/app 
-  #   ports:
-  #     - "3001:3000"
-  #   environment:
-  #     - MONGO_URI=mongodb://mongo_commande:27017/db_commande
-  #     - RABBITMQ_URL=amqp://rabbitmq
-  #   depends_on:
-  #     - mongo_commande
-  #     - rabbitmq
+  commande_app:
+    build: ./commande
+    container_name: commande_app
+    volumes:
+      - .:/usr/src/app 
+    ports:
+      - "3001:3000"
+    environment:
+      - MONGO_URI=mongodb://mongo_commande:27017/db_commande
+      - RABBITMQ_URL=amqp://admin:admin@rabbitmq
+    depends_on:
+      - mongo_commande
+      - rabbitmq
 
-  # menu_app:
-  #   build: ./menu
-  #   container_name: menu_app
-  #   volumes:
-  #     - .:/usr/src/app 
-  #   ports:
-  #     - "3002:3000"
-  #   environment:
-  #     - MONGO_URI=mongodb://mongo_menu:27017/db_menu
-  #     - RABBITMQ_URL=amqp://rabbitmq
-  #   depends_on:
-  #     - mongo_menu
-  #     - rabbitmq
+  menu_app:
+    build: ./menu
+    container_name: menu_app
+    volumes:
+      - .:/usr/src/app 
+    ports:
+      - "3002:3000"
+    environment:
+      - MONGO_URI=mongodb://mongo_menu:27017/db_menu
+      - RABBITMQ_URL=amqp://admin:admin@rabbitmq
+    depends_on:
+      - mongo_menu
+      - rabbitmq
 
-  # utilisateur_app:
-  #   build: ./utilisateur
-  #   container_name: utilisateur_app
-  #   volumes:
-  #     - .:/usr/src/app 
-  #   ports:
-  #     - "3003:3000"
-  #   environment:
-  #     - MONGO_URI=mongodb://mongo_utilisateur:27017/db_utilisateur
-  #     - RABBITMQ_URL=amqp://rabbitmq
-  #   depends_on:
-  #     - mongo_utilisateur
-  #     - rabbitmq
+  utilisateur_app:
+    build: ./utilisateur
+    container_name: utilisateur_app
+    volumes:
+      - .:/usr/src/app 
+    ports:
+      - "3003:3000"
+    environment:
+      - MONGO_URI=mongodb://mongo_utilisateur:27017/db_utilisateur
+      - RABBITMQ_URL=amqp://admin:admin@rabbitmq
+      - JWT_SECRET=dfgbdfgnbdfdbn
+    depends_on:
+      - mongo_utilisateur
+      - rabbitmq
 
-
-  # mongo_commande:
-  #   image: mongo:6
-  #   container_name: mongo_db_commande
-    # ports:
-    #   - "27017:27017"
+  mongo_commande:
+    image: mongo:6
+    container_name: mongo_db_commande
+    ports:
+      - "27017:27017"
     # volumes:
     #   - mongo_data:/data/db
 
-  # mongo_menu:
-  #   image: mongo:6
-  #   container_name: mongo_db_menu
-    # ports:
-    #   - "27018:27017"
-    # volumes:
-    #   - mongo_data:/data/db
+  mongo_menu:
+   image: mongo:6
+   container_name: mongo_db_menu
+   ports:
+      - "27018:27017"
+  #  volumes:
+  #     - mongo_data:/data/db
 
   mongo_utilisateur:
     image: mongo:6
