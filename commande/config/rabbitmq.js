@@ -41,4 +41,10 @@ async function consume(queueName, onMessage) {
         }
     });
 }
-module.exports = { connectRabbitMQ, sendToQueue, consume };
+
+async function assertQueue(queue = `reply_queue_${Date.now()}`) {
+    const replyQueue = await channel.assertQueue(queue);
+
+    return replyQueue
+}
+module.exports = { connectRabbitMQ, sendToQueue, consume, assertQueue };

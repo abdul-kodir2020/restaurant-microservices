@@ -1,21 +1,26 @@
-const { sendToQueue, consume } = require('../config/rabbitmq');
+const { sendToQueue, consume, channel, assertQueue } = require('../config/rabbitmq');
 const Order = require('../models/commandeModel');
 
 module.exports.makeOrder = async (req, res) => {
     try {
         const { customerName, menuId, quantity } = req.body;
 
+        // if (!channel) {
+        //     return res.status(500).json({ message: 'RabbitMQ channel is not available' });
+        // }
+
         // Générer un ID unique pour la corrélation
         const correlationId = require('crypto').randomBytes(16).toString('hex');
 
         // Configurer la file d'attente pour la réponse
-        const replyQueue = await channel.assertQueue('', { exclusive: true });
-
+        const replyQueue = await assertQueue()
+        
         sendToQueue('checkAvailability', { menuId, quantity }, {
             correlationId,
             replyTo: replyQueue.queue,
         });
-
+        
+        
         consume(replyQueue.queue, async (message, originalMessage) => {
             if (originalMessage.properties.correlationId === correlationId) {
                 if (!message.exists) {
@@ -39,6 +44,8 @@ module.exports.makeOrder = async (req, res) => {
 }
 
 module.exports.getOrders = async (req, res) => {
+    
+    
     try {
         const orders = await Order.find().populate('menuId');
         res.status(200).json(orders);

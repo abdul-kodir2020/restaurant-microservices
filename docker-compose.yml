@@ -43,6 +43,7 @@ services:
     environment:
       - MONGO_URI=mongodb://mongo_commande:27017/db_commande
       - RABBITMQ_URL=amqp://admin:admin@rabbitmq:5672
+      - JWT_SECRET=dfgbdfgnbdfdbn
     depends_on:
       - mongo_commande
       - rabbitmq
@@ -57,6 +58,7 @@ services:
     environment:
       - MONGO_URI=mongodb://mongo_menu:27017/db_menu
       - RABBITMQ_URL=amqp://admin:admin@rabbitmq:5672
+      - JWT_SECRET=dfgbdfgnbdfdbn
     depends_on:
       - mongo_menu
       - rabbitmq

@@ -13,11 +13,11 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: true}))
 
-app.use('/api/orders/', require('./routes/commandeRoutes'))
+app.use('/api/orders', require('./routes/commandeRoutes'))
 
 
 app.get('/', (req, res) => {
-  res.send('Hello World for commande')
+  res.json('Hello World for commande')
 })
 
 
